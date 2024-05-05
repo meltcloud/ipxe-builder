@@ -1,0 +1,2 @@
+TARGETS_AMD64="bin/undionly.kpxe bin/ipxe.lkrn bin-x86_64-efi/ipxe.efi"
+TARGETS_AARCH64="bin-arm64-efi/ipxe.efi"
