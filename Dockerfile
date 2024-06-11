@@ -14,6 +14,6 @@ ADD customize.sh /build
 
 WORKDIR /build
 
-RUN ./compile.sh 
+RUN ./compile.sh
 
 CMD ./customize.sh
