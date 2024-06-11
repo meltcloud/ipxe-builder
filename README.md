@@ -1,31 +1,36 @@
 # ipxe-builder
 
-container image with pre-complied ipxe roms (undionly.kpxe, amd64-ipxe.efi, aarch64-ipxe.efi, ipxe.iso) 
+Container image with pre-complied ipxe roms (undionly.kpxe, amd64-ipxe.efi, aarch64-ipxe.efi, ipxe.iso)
 
-## getting started
+## Getting started
+
+```bash
+git submodule update --init --recursive
+```
 
 build image
 
-```
-# # apply patch to ipxe submodule enabling crypto / https
-# (cd ipxe && git apply ../patches/crypto.patch)
-# docker build . -t ipxe-builder
+```bash
+# apply patch to ipxe submodule enabling crypto / https
+(cd ipxe && git apply ../patches/crypto.patch)
+docker build . -t ipxe-builder
 
-```
 prepare customization inputs (client cert, key and embedded script).
 filenames need to be respected:
+
 - cert.pem
 - key.pem
 - embed.ipxe
 
+```bash
+foundry=<path to your foundry repo>
+cp $foundry/test_ca/client.crt inputs/cert.pem
+cp $foundry/test_ca/client.key inputs/key.pem
+cp $foundry/test_ipxe_config/embed.ipxe inputs/
 ```
-# mkdir ~/ipxe_inputs
-# mkdir ~/ipxe_artifacts
-# copy cert.pem key.pem embed.ipxe ~/ipxe_inputs 
 
-```
 customize ipxe rom
 
-```
-# docker run --rm -v ~/ipxe_inputs:/input -v ~/ipxe_artifacts:/output ipxe-builder 
+```bash
+docker run --rm -v ./inputs:/input -v ./artifacts:/output ipxe-builder
 ```
