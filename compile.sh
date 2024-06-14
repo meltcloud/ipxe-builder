@@ -21,8 +21,8 @@ fix_git() {
   cd -
 }
 
-fix_git ipxe_amd64
-fix_git ipxe_aarch64
+#fix_git ipxe_amd64
+#fix_git ipxe_aarch64
 
 cd ipxe_amd64/src
 make -j 4 ${TARGETS_AMD64}

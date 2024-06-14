@@ -4,16 +4,12 @@ Container image with pre-complied ipxe roms (undionly.kpxe, amd64-ipxe.efi, aarc
 
 ## Getting started
 
-```bash
-git submodule update --init --recursive
-```
 
 build image
 
 ```bash
-# apply patch to ipxe submodule enabling crypto / https
-(cd ipxe && git apply ../patches/crypto.patch)
-docker build . -t ipxe-builder
+# docker build . -t ipxe-builder
+```
 
 prepare customization inputs (client cert, key and embedded script).
 filenames need to be respected:

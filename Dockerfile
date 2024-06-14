@@ -6,14 +6,21 @@ RUN apt-get install -y gcc binutils make perl liblzma-dev mtools genisoimage sys
 
 RUN mkdir -p /build
 
-ADD ipxe /build/ipxe_amd64
-ADD ipxe /build/ipxe_aarch64
+RUN set -xe \
+    && git clone https://github.com/ipxe/ipxe.git /build/ipxe
+
+COPY config /build/ipxe/src/config
+
+RUN cp -rp /build/ipxe /build/ipxe_amd64
+RUN cp -rp /build/ipxe /build/ipxe_aarch64
+
+
 ADD build_targets /build
 ADD compile.sh /build
 ADD customize.sh /build
 
 WORKDIR /build
 
-RUN ./compile.sh
+RUN ./compile.sh 
 
 CMD ./customize.sh
