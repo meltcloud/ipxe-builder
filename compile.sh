@@ -8,9 +8,9 @@ fi
 . build_targets
 
 cd ipxe_amd64/src
-make -j 4 ${TARGETS_AMD64}
+make -j $(nproc) ${TARGETS_AMD64}
 cd -
 
 cd ipxe_aarch64/src
-make -j 4 ${TARGETS_AARCH64} CROSS=aarch64-linux-gnu-
+make -j $(nproc) ${TARGETS_AARCH64} CROSS=aarch64-linux-gnu-
 cd -

@@ -4,11 +4,10 @@ Container image with pre-complied ipxe roms (undionly.kpxe, amd64-ipxe.efi, aarc
 
 ## Getting started
 
-
 build image
 
 ```bash
-# docker build . -t ipxe-builder
+docker build . -t ipxe-builder
 ```
 
 prepare customization inputs (client cert, key and embedded script).
