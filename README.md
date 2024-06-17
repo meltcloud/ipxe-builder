@@ -24,6 +24,14 @@ cp $foundry/test_ca/client.key inputs/key.pem
 cp $foundry/test_ipxe_config/embed.ipxe inputs/
 ```
 
+You might need to remove the passphrase (at least Sevä does on linux...) to
+prevent `Could not read private key from /input/key.pem` when customizing.
+
+```bash
+openssl rsa -in inputs/key.pem -out inputs/key.pem.unprotected
+mv inputs/key.pem{.unprotected,}
+```
+
 customize ipxe rom
 
 ```bash
