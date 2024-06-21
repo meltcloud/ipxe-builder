@@ -25,6 +25,8 @@ cp $foundry/test_ca/client.key inputs/key.pem
 cp $foundry/test_ipxe_config/embed.ipxe inputs/
 ```
 
+Edit `inputs/embed.ipxe` and uncomment the corret `chain` statement for your OS.
+
 customize ipxe rom
 
 ```bash
