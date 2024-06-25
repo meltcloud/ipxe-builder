@@ -2,7 +2,7 @@ FROM --platform=linux/amd64 ubuntu:latest
 RUN apt-get update
 
 RUN apt-get upgrade -y
-RUN apt-get install -y gcc binutils make perl liblzma-dev mtools genisoimage syslinux isolinux git gcc-aarch64-linux-gnu
+RUN apt-get install -y gcc binutils make perl liblzma-dev mtools genisoimage syslinux isolinux git gcc-aarch64-linux-gnu openssl curl
 
 RUN mkdir -p /build
 
@@ -18,6 +18,7 @@ RUN cp -rp /build/ipxe /build/ipxe_aarch64
 ADD build_targets /build
 ADD compile.sh /build
 ADD customize.sh /build
+ADD generate_artifacts.sh /build
 
 WORKDIR /build
 
