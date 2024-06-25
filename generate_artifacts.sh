@@ -65,18 +65,26 @@ move_artifacts() {
   done
 }
 
+upload_artifact() {
+    ARTIFACT=$1
+    FILENAME=$2
+
+    echo "uploading ${FILENAME} the quick and dirty way"
+    BYTE_SIZE=$(stat --printf="%s" ${OUTPUT}/${FILENAME})
+    CHECKSUM=$(openssl dgst -md5 -binary ${OUTPUT}/${FILENAME} | base64)
+
+    URL=$(cat /input/upload_urls/.upload_url_${ARTIFACT})
+    URL="${URL}?byte_size=${BYTE_SIZE}&checksum=${CHECKSUM}"
+
+    DIRECT_UPLOAD=$(curl ${URL})
+    DIRECT_UPLOAD="${DIRECT_UPLOAD} --data-binary @${OUTPUT}/${FILENAME}"
+    eval ${DIRECT_UPLOAD}
+}
+
 build_amd64
 build_aarch64
 build_iso
 move_artifacts
-
-echo "uploading ipxe.iso the quick and dirty way"
-BYTE_SIZE=$(stat --printf="%s" ${OUTPUT}/ipxe.iso)
-CHECKSUM=$(openssl dgst -md5 -binary ${OUTPUT}/ipxe.iso | base64)
-
-URL=$(cat /input/upload_urls/.upload_url_iso)
-URL="${URL}?byte_size=${BYTE_SIZE}&checksum=${CHECKSUM}"
-
-DIRECT_UPLOAD=$(curl ${URL})
-DIRECT_UPLOAD="${DIRECT_UPLOAD} --data-binary @${OUTPUT}/ipxe.iso"
-eval ${DIRECT_UPLOAD}
+upload_artifact "iso" "ipxe.iso"
+upload_artifact "pxe" "undionly.kpxe"
+upload_artifact "efi" "ipxe.efi"
