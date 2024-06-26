@@ -32,8 +32,8 @@ fi
 
 MAKE_PARAMS="EMBED=${EMBED} CERT=${CERT} PRIVKEY=${PRIVKEY}"
 
-if [ -f ${IPXE_CONFIG}/ca.pem ]; then
-	MAKE_PARAMS="${MAKE_PARAMS} TRUST=${IPXE_CONFIG}/ca.pem"
+if [ -f ${IPXE_CONFIG}/script/ca.pem ]; then
+	MAKE_PARAMS="${MAKE_PARAMS} TRUST=${IPXE_CONFIG}/script/ca.pem"
 fi
 
 BUILDS="bin/undionly.kpxe bin/ipxe.lkrn bin-x86_64-efi/ipxe.efi"
