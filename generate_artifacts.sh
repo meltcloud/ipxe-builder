@@ -74,9 +74,7 @@ upload_artifact() {
     CHECKSUM=$(openssl dgst -md5 -binary ${OUTPUT}/${FILENAME} | base64)
 
     URL=$(cat /input/upload_urls/.upload_url_${ARTIFACT})
-    URL="${URL}?byte_size=${BYTE_SIZE}&checksum=${CHECKSUM}"
-
-    DIRECT_UPLOAD=$(curl ${URL})
+    DIRECT_UPLOAD=$(curl ${URL} --data-urlencode byte_size=${BYTE_SIZE} --data-urlencode checksum=${CHECKSUM} -G)
     DIRECT_UPLOAD="${DIRECT_UPLOAD} --data-binary @${OUTPUT}/${FILENAME}"
     eval ${DIRECT_UPLOAD}
 }
