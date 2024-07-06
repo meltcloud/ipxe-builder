@@ -75,7 +75,7 @@ upload_artifact() {
 
     URL=$(cat /input/upload_urls/.upload_url_${ARTIFACT})
     DIRECT_UPLOAD=$(curl ${URL} --data-urlencode byte_size=${BYTE_SIZE} --data-urlencode checksum=${CHECKSUM} -G)
-    DIRECT_UPLOAD="${DIRECT_UPLOAD} --data-binary @${OUTPUT}/${FILENAME}"
+    DIRECT_UPLOAD="${DIRECT_UPLOAD} --upload-file ${OUTPUT}/${FILENAME}"
     eval ${DIRECT_UPLOAD}
 }
 
