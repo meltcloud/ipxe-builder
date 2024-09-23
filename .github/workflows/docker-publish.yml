@@ -7,7 +7,6 @@ name: build-publish-image
 
 on:
   push:
-    branches: [ "main" ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
 
@@ -15,7 +14,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: europe-west6-docker.pkg.dev
   # github.repository as <account>/<repo>
-  IMAGE_NAME: saas-dev-427715/foundry/ipxe-builder
+  IMAGE_NAME: saas-prd-434506/foundry/ipxe-builder
 
 
 jobs:
