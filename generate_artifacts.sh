@@ -60,9 +60,9 @@ move_artifacts() {
   for target in ${TARGETS_AMD64}; do
 	  mv ${PWD}/ipxe_amd64/src/$target ${OUTPUT}
   done
-  for target in ${TARGETS_AARCH64}; do
-	  mv ${PWD}/ipxe_aarch64/src/$target ${OUTPUT}
-  done
+#  for target in ${TARGETS_AARCH64}; do
+#	  mv ${PWD}/ipxe_aarch64/src/$target ${OUTPUT}
+#  done
 }
 
 upload_artifact() {
