@@ -2,7 +2,7 @@ FROM --platform=linux/amd64 ubuntu:latest
 RUN apt-get update
 
 RUN apt-get upgrade -y
-RUN apt-get install -y gcc binutils make perl liblzma-dev mtools genisoimage syslinux isolinux git gcc-aarch64-linux-gnu openssl curl
+RUN apt-get install -y gcc binutils make perl liblzma-dev mtools genisoimage syslinux isolinux git gcc-aarch64-linux-gnu openssl curl qemu-utils
 
 RUN mkdir -p /build
 

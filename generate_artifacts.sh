@@ -38,6 +38,13 @@ fi
 
 BUILDS="bin/undionly.kpxe bin/ipxe.lkrn bin-x86_64-efi/ipxe.efi"
 
+prepare_output() {
+  pushd ${OUTPUT}
+  mkdir amd64
+  mkdir arm64
+  popd
+}
+
 build_amd64() {
   pushd ${PWD}/ipxe_amd64/src
   make ${TARGETS_AMD64} ${MAKE_PARAMS}
@@ -58,11 +65,15 @@ build_iso() {
 
 move_artifacts() {
   for target in ${TARGETS_AMD64}; do
-	  mv ${PWD}/ipxe_amd64/src/$target ${OUTPUT}
+    if [[ $target =~ .vhd$ ]]; then
+      qemu-img convert -f vpc -O raw ${PWD}/ipxe_amd64/src/$target ${OUTPUT}/amd64/ipxe.raw
+    else
+	    mv ${PWD}/ipxe_amd64/src/$target ${OUTPUT}/amd64
+    fi
   done
-#  for target in ${TARGETS_AARCH64}; do
-#	  mv ${PWD}/ipxe_aarch64/src/$target ${OUTPUT}
-#  done
+  for target in ${TARGETS_AARCH64}; do
+	  mv ${PWD}/ipxe_aarch64/src/$target ${OUTPUT}/arm64
+  done
 }
 
 upload_artifact() {
@@ -79,10 +90,13 @@ upload_artifact() {
     eval ${DIRECT_UPLOAD}
 }
 
+prepare_output
 build_amd64
 build_aarch64
 build_iso
 move_artifacts
 upload_artifact "iso" "ipxe.iso"
-upload_artifact "pxe" "undionly.kpxe"
-upload_artifact "efi" "ipxe.efi"
+upload_artifact "pxe" "amd64/undionly.kpxe"
+upload_artifact "efi_amd64" "amd64/ipxe.efi"
+upload_artifact "efi_arm64" "arm64/ipxe.efi"
+upload_artifact "raw_amd64" "amd64/ipxe.raw"
